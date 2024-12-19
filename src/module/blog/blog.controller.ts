@@ -17,7 +17,35 @@ const createBlog = asyncHandler(
     );
   }
 );
+const updateBlog = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    // Update a blog here
+    const id = req.params.id;
+    const payload = req.body;
+    const updatedBlog = await blogServices.updateBlogIntoDB(id, payload);
+    sendResponse(
+      res,
+      new CustomResponse("Blog updated successfully", 200, updatedBlog)
+    );
+  }
+);
+
+const deleteABlog = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    // Delete a blog here
+    const id = req.params.id;
+    const isDeleted = await blogServices.deleteBlogFromDb(id);
+    if (isDeleted) {
+      sendResponse(
+        res,
+        new CustomResponse("Blog deleted successfully", 200, { isDeleted })
+      );
+    }
+  }
+);
 
 export const blogControllers = {
   createBlog,
+  updateBlog,
+  deleteABlog,
 };

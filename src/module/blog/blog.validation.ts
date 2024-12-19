@@ -7,6 +7,14 @@ const createBlogSchema = z
   })
   .strict();
 
+const updateBlogSchema = z
+  .object({
+    title: z.string().optional(),
+    content: z.string().optional(),
+  })
+  .strict();
+
 export const blogValidation = {
   createBlogSchema,
+  updateBlogSchema,
 };
