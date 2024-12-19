@@ -47,7 +47,8 @@ const deleteABlog = asyncHandler(
 const getAllBlogs = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     // Get all blogs here
-    const blogs = await blogServices.getAllBlogsFromDb();
+    console.log(req.query);
+    const blogs = await blogServices.getAllBlogsFromDb(req.query);
     sendResponse(res, new CustomResponse("All blogs", 200, blogs));
   }
 );

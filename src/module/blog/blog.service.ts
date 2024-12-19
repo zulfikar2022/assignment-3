@@ -75,9 +75,24 @@ const deleteBlogFromDb = async (id: string) => {
   }
 };
 
-const getAllBlogsFromDb = async () => {
+const getAllBlogsFromDb = async (query: Record<string, unknown>) => {
   try {
-    const blogs = await Blog.find().populate("author");
+    let { search, sortBy, sortOrder, filter } = query;
+
+    // making the sort order dynamically
+    let sortOrderValue = sortOrder === "asc" ? "" : "-";
+    sortBy = sortBy || "createdAt";
+
+    const blogs = await Blog.find({
+      author: filter || { $exists: true },
+      isPublished: true,
+      $or: [
+        { title: { $regex: search || "", $options: "i" } },
+        { content: { $regex: search || "", $options: "i" } },
+      ],
+    })
+      .sort(`${sortOrderValue}${sortBy}`)
+      .populate("author");
     const returnableBlogs = blogs.map((blog) => {
       return {
         _id: blog._id,

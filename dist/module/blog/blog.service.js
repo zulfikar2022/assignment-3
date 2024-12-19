@@ -58,9 +58,22 @@ const deleteBlogFromDb = async (id) => {
         throw new CustomError("Failed to delete a blog", 500, error);
     }
 };
-const getAllBlogsFromDb = async () => {
+const getAllBlogsFromDb = async (query) => {
     try {
-        const blogs = await Blog.find().populate("author");
+        let { search, sortBy, sortOrder, filter } = query;
+        // making the sort order dynamically
+        let sortOrderValue = sortOrder === "asc" ? "" : "-";
+        sortBy = sortBy || "createdAt";
+        const blogs = await Blog.find({
+            author: filter || { $exists: true },
+            isPublished: true,
+            $or: [
+                { title: { $regex: search || "", $options: "i" } },
+                { content: { $regex: search || "", $options: "i" } },
+            ],
+        })
+            .sort(`${sortOrderValue}${sortBy}`)
+            .populate("author");
         const returnableBlogs = blogs.map((blog) => {
             return {
                 _id: blog._id,
