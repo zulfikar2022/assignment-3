@@ -1,4 +1,5 @@
 import { CustomError } from "../../utilities/CustomError.js";
+import { Blog } from "../blog/blog.model.js";
 import { User } from "../user/user.model.js";
 
 const blockAUserIntoDB = async (userId: string) => {
@@ -17,9 +18,23 @@ const blockAUserIntoDB = async (userId: string) => {
     throw new CustomError("User already blocked", 400, {});
   }
   await User.findByIdAndUpdate(userId, { isBlocked: true });
-  return true;
+  return;
+};
+
+const deleteABlogFromDB = async (blogId: string) => {
+  try {
+    // Delete a blog from the database
+    const blog = await Blog.findByIdAndDelete(blogId);
+    if (!blog) {
+      throw new CustomError("Blog not found", 404, new Error("Blog not found"));
+    }
+    return;
+  } catch (error) {
+    throw new CustomError("Error while deleting the blog", 500, error);
+  }
 };
 
 export const adminServices = {
   blockAUserIntoDB,
+  deleteABlogFromDB,
 };

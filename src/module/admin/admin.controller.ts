@@ -15,6 +15,15 @@ const blockAUser = asyncHandler(
   }
 );
 
+const deleteABlog = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    await adminServices.deleteABlogFromDB(id);
+    sendResponse(res, new CustomResponse("Blog deleted successfully", 200, {}));
+  }
+);
+
 export const adminController = {
   blockAUser,
+  deleteABlog,
 };
