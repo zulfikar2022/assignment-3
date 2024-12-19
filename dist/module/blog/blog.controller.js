@@ -22,8 +22,14 @@ const deleteABlog = asyncHandler(async (req, res, next) => {
         sendResponse(res, new CustomResponse("Blog deleted successfully", 200, { isDeleted }));
     }
 });
+const getAllBlogs = asyncHandler(async (req, res, next) => {
+    // Get all blogs here
+    const blogs = await blogServices.getAllBlogsFromDb();
+    sendResponse(res, new CustomResponse("All blogs", 200, blogs));
+});
 export const blogControllers = {
     createBlog,
     updateBlog,
     deleteABlog,
+    getAllBlogs,
 };

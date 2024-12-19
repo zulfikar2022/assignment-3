@@ -75,8 +75,26 @@ const deleteBlogFromDb = async (id: string) => {
   }
 };
 
+const getAllBlogsFromDb = async () => {
+  try {
+    const blogs = await Blog.find().populate("author");
+    const returnableBlogs = blogs.map((blog) => {
+      return {
+        _id: blog._id,
+        title: blog.title,
+        content: blog.content,
+        author: blog.author,
+      };
+    });
+    return returnableBlogs;
+  } catch (error) {
+    throw new CustomError("Failed to get all blogs", 500, error);
+  }
+};
+
 export const blogServices = {
   createBlogIntoDB,
   updateBlogIntoDB,
   deleteBlogFromDb,
+  getAllBlogsFromDb,
 };
