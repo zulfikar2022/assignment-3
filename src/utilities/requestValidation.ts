@@ -1,4 +1,4 @@
-import { ZodError, ZodSchema } from "zod";
+import { ZodSchema } from "zod";
 import { Request, Response, NextFunction } from "express";
 import { CustomError } from "./CustomError.js";
 
