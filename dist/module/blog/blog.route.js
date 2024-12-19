@@ -7,6 +7,6 @@ import { userRoles } from "../user/user.constants.js";
 const router = express.Router();
 router.post("/", auth(userRoles.USER), validateSchema(blogValidation.createBlogSchema), blogControllers.createBlog);
 router.patch("/:id", auth(userRoles.USER), validateSchema(blogValidation.updateBlogSchema), blogControllers.updateBlog);
-router.delete("/:id", auth(userRoles.USER, userRoles.ADMIN), blogControllers.deleteABlog);
+router.delete("/:id", auth(userRoles.USER), blogControllers.deleteABlog);
 router.get("/", blogControllers.getAllBlogs);
 export const blogsRoute = router;
