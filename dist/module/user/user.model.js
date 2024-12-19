@@ -37,6 +37,8 @@ const userSchema = new Schema({
 });
 userSchema.pre("save", async function (next) {
     this.password = await bcrypt.hash(this.password, parseInt(environmentVariables.salt_rounds));
+    console.log("Password hashed");
+    console.log(this.password);
     next();
 });
 export const User = model("User", userSchema);

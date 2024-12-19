@@ -1,16 +1,12 @@
 import { Response } from "express";
+import { CustomResponse } from "./CustomResponse.js";
 
-const sendResponse = (
-  res: Response,
-  statusCode: number = 200,
-  message: string = "Success",
-  data: any
-) => {
+const sendResponse = (res: Response, response: CustomResponse) => {
   res.json({
-    success: true,
-    message,
-    statusCode,
-    data,
+    success: response.success,
+    message: response.message,
+    statusCode: response.statusCode,
+    data: response.data,
   });
 };
 

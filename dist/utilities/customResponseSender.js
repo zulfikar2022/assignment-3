@@ -1,9 +1,9 @@
-const sendResponse = (res, statusCode = 200, message = "Success", data) => {
+const sendResponse = (res, response) => {
     res.json({
-        success: true,
-        message,
-        statusCode,
-        data,
+        success: response.success,
+        message: response.message,
+        statusCode: response.statusCode,
+        data: response.data,
     });
 };
 export default sendResponse;

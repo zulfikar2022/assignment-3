@@ -1,3 +1,4 @@
+import { CustomError } from "../../utilities/CustomError.js";
 import { TUser } from "./user.interface.js";
 import { User } from "./user.model.js";
 
@@ -7,7 +8,9 @@ const createUserIntoDB = async (payload: Partial<TUser>) => {
     const { _id, name, email } = user;
     return { _id, name, email };
   } catch (error) {
-    throw error;
+    console.log("Inside the catch block");
+    console.log({ error });
+    throw new CustomError("User Creation failed", 409, error);
   }
 };
 

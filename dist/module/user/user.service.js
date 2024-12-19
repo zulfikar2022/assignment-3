@@ -1,3 +1,4 @@
+import { CustomError } from "../../utilities/CustomError.js";
 import { User } from "./user.model.js";
 const createUserIntoDB = async (payload) => {
     try {
@@ -6,7 +7,9 @@ const createUserIntoDB = async (payload) => {
         return { _id, name, email };
     }
     catch (error) {
-        throw error;
+        console.log("Inside the catch block");
+        console.log({ error });
+        throw new CustomError("User Creation failed", 409, error);
     }
 };
 export const userServices = {

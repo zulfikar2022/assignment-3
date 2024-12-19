@@ -1,5 +1,6 @@
 import { ZodError, ZodSchema } from "zod";
 import { Request, Response, NextFunction } from "express";
+import { CustomError } from "./CustomError.js";
 
 const validateSchema = (schema: ZodSchema) => {
   return (req: Request, res: Response, next: NextFunction) => {
@@ -7,7 +8,7 @@ const validateSchema = (schema: ZodSchema) => {
       schema.parse(req.body);
       next();
     } catch (error) {
-      next(error);
+      next(new CustomError("Validation failed", 400, error));
     }
   };
 };

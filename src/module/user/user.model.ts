@@ -52,6 +52,8 @@ userSchema.pre("save", async function (next) {
     this.password,
     parseInt(environmentVariables.salt_rounds as string)
   );
+  console.log("Password hashed");
+  console.log(this.password);
   next();
 });
 
