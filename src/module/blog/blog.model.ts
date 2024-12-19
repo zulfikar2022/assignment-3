@@ -15,6 +15,7 @@ const blogSchema = new Schema<TBlog>(
     author: {
       type: Schema.Types.ObjectId,
       ref: "User",
+      required: [true, "A blog cannot be created without an author"],
       validate: {
         validator: async (value: Schema.Types.ObjectId) => {
           const user = await User.findById(value);

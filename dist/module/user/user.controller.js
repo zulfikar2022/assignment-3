@@ -15,10 +15,6 @@ const loginUser = async (req, res, next) => {
     try {
         const { email, password } = req.body;
         const user = await User.findOne({ email }).select("+password");
-        // if user does not exists then email is wrong
-        // if (!user) {
-        //   throw new CustomError("Invalid credentials", 401, {});
-        // }
         const isPasswordMatched = await bcrypt.compare(password, user?.password);
         // if password does not matched then invalid credentials
         if (!isPasswordMatched) {

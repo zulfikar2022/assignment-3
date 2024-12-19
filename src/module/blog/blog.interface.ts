@@ -6,3 +6,5 @@ export type TBlog = {
   author: Types.ObjectId;
   isPublished: boolean;
 };
+
+export type TBlogPayload = Pick<TBlog, "title" | "content">;
