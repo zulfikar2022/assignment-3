@@ -29,4 +29,9 @@ const blogSchema = new Schema({
     timestamps: true,
     versionKey: false,
 });
+// blogSchema.post("save", async function (doc) {
+//   delete doc.isPublished;
+//   delete doc.createdAt;
+//   delete doc.updatedAt;
+// });
 export const Blog = model("Blog", blogSchema);

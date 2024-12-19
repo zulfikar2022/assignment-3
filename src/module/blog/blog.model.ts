@@ -35,4 +35,10 @@ const blogSchema = new Schema<TBlog>(
   }
 );
 
+// blogSchema.post("save", async function (doc) {
+//   delete doc.isPublished;
+//   delete doc.createdAt;
+//   delete doc.updatedAt;
+// });
+
 export const Blog = model<TBlog>("Blog", blogSchema);

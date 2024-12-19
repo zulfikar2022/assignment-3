@@ -5,8 +5,18 @@ const createBlogIntoDB = async (user, payload) => {
         const { title, content } = payload;
         const { _id, email, role } = user;
         // Create a blog here
-        const blog = (await Blog.create({ title, content, author: _id })).populate("author");
-        return blog;
+        const blog = await (await Blog.create({
+            title,
+            content,
+            author: _id,
+        })).populate("author");
+        const returnableBlog = {
+            _id: blog._id,
+            title: blog.title,
+            content: blog.content,
+            author: blog.author,
+        };
+        return returnableBlog;
     }
     catch (error) {
         throw new CustomError("Failed to create a blog", 500, error);

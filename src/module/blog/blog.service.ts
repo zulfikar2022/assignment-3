@@ -1,11 +1,12 @@
 import { Types } from "mongoose";
-import { TBlogPayload } from "./blog.interface.js";
+import { TBlog, TBlogPayload } from "./blog.interface.js";
 import { Blog } from "./blog.model.js";
 import { CustomError } from "../../utilities/CustomError.js";
+import { User } from "../user/user.model.js";
 
 const createBlogIntoDB = async (
   user: {
-    _id: Types.ObjectId;
+    _id: string;
     email: string;
     role: "admin" | "user";
   },
@@ -15,10 +16,21 @@ const createBlogIntoDB = async (
     const { title, content } = payload;
     const { _id, email, role } = user;
     // Create a blog here
-    const blog = (await Blog.create({ title, content, author: _id })).populate(
-      "author"
-    );
-    return blog;
+    const blog = await (
+      await Blog.create({
+        title,
+        content,
+        author: _id,
+      })
+    ).populate("author");
+
+    const returnableBlog = {
+      _id: blog._id,
+      title: blog.title,
+      content: blog.content,
+      author: blog.author,
+    };
+    return returnableBlog;
   } catch (error) {
     throw new CustomError("Failed to create a blog", 500, error);
   }

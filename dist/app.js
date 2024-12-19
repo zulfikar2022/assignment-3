@@ -12,7 +12,6 @@ app.all("*", (req, res) => {
 });
 // creating an error handling middleware
 app.use((error, req, res, next) => {
-    console.log("Inside global error handler.");
     sendError(res, error);
 });
 export default app;

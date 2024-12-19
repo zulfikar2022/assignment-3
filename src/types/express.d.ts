@@ -3,7 +3,7 @@ import { Types } from "mongoose";
 declare global {
   namespace Express {
     interface Request {
-      _id: Types.ObjectId;
+      _id: string;
       email: string;
       role: "user" | "admin";
     }
